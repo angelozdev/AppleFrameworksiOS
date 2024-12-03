@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class FrameworkGridViewModel: ObservableObject {
+final class FrameworksViewModel: ObservableObject {
     @Published var selectedFramework: Framework? = nil
 
     var isShowingDetailView: Bool {
@@ -17,4 +17,8 @@ final class FrameworkGridViewModel: ObservableObject {
     func closeDetailView() {
         selectedFramework = nil
     }
+}
+
+enum FrameworkDisplayMode {
+    case list, grid
 }

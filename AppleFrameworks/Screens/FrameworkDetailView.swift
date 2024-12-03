@@ -10,6 +10,7 @@ import SwiftUI
 struct FrameworkDetailView: View {
     let framework: Framework
     @Binding var isShowingDetailView: Bool
+    @State private var isShowingSarariView = false
 
     var body: some View {
         VStack(spacing: 32) {
@@ -36,27 +37,32 @@ struct FrameworkDetailView: View {
                 Text(framework.name).font(.title)
             }
 
-            Text(framework.description).font(.body).foregroundStyle(.secondary)
+            Text(framework.description)
+                .font(.body)
+                .foregroundStyle(.secondary)
 
             Spacer()
 
             Button {
+                isShowingSarariView.toggle()
             } label: {
-                Text("Read More")
-                    .font(.title2)
+                Text("Learn more")
+                    .font(.title3)
                     .fontWeight(.semibold)
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 12)
-                    .background(.brown)
-                    .foregroundStyle(.white)
+                    .padding()
+                    .background(.ultraThinMaterial)
                     .cornerRadius(10)
             }
 
-        }.padding()
+        }.padding().sheet(isPresented: $isShowingSarariView) {
+            SafariView(url: URL(string: framework.url)!)
+        }
     }
 }
 
 #Preview {
-    @Previewable @State var isShowing: Bool = true
-    FrameworkDetailView(framework: MockData.frameworks[0], isShowingDetailView: $isShowing)
+    FrameworkDetailView(
+        framework: MockData.frameworks[0],
+        isShowingDetailView: .constant(false)
+    )
 }
