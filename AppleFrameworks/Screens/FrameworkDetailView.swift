@@ -9,23 +9,10 @@ import SwiftUI
 
 struct FrameworkDetailView: View {
     let framework: Framework
-    @Binding var isShowingDetailView: Bool
     @State private var isShowingSarariView = false
 
     var body: some View {
         VStack(spacing: 32) {
-            HStack {
-                Spacer()
-                Button {
-                    isShowingDetailView = false
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(.title)
-                        .padding()
-                        .foregroundColor(.gray)
-                }
-            }
-
             Spacer()
 
             VStack {
@@ -62,7 +49,6 @@ struct FrameworkDetailView: View {
 
 #Preview {
     FrameworkDetailView(
-        framework: MockData.frameworks[0],
-        isShowingDetailView: .constant(false)
+        framework: MockData.frameworks[0]
     )
 }

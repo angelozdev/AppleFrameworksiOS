@@ -9,14 +9,6 @@ import Foundation
 
 final class FrameworksViewModel: ObservableObject {
     @Published var selectedFramework: Framework? = nil
-
-    var isShowingDetailView: Bool {
-        selectedFramework != nil
-    }
-
-    func closeDetailView() {
-        selectedFramework = nil
-    }
 }
 
 enum FrameworkDisplayMode {

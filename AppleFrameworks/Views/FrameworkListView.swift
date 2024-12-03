@@ -9,21 +9,22 @@ import SwiftUI
 
 struct FrameworkListView: View {
     let frameworks: [Framework]
-    let onFrameworkSelected: (Framework) -> Void
 
     var body: some View {
         List(frameworks) { framework in
-            FrameworkRowView(framework: framework)
-                .onTapGesture {
-                    onFrameworkSelected(framework)
-                }
-        }.listStyle(InsetGroupedListStyle())
+            NavigationLink(value: framework) {
+                FrameworkRowView(framework: framework)
+            }
+        }
+        .listStyle(InsetGroupedListStyle())
+        .navigationTitle("🍎 Apple Frameworks")
     }
 }
 
 #Preview {
-    FrameworkListView(
-        frameworks: MockData.frameworks,
-        onFrameworkSelected: { print($0.name) }
-    )
+    NavigationStack {
+        FrameworkListView(
+            frameworks: MockData.frameworks
+        )
+    }
 }

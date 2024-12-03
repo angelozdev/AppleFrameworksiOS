@@ -10,24 +10,20 @@ import SwiftUI
 struct FrameworksGridView: View {
     private let columns: [GridItem] = Array(repeating: GridItem(.flexible()), count: 3)
     let frameworks: [Framework]
-    let onFrameworkSelected: (Framework) -> Void
 
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, alignment: .center, spacing: 12) {
-                ForEach(frameworks, id: \.id) { framework in FrameworkCardView(framework: framework)
-                    .onTapGesture {
-                        onFrameworkSelected(framework)
+                ForEach(frameworks, id: \.id) { framework in
+                    NavigationLink(value: framework) {
+                        FrameworkCardView(framework: framework)
                     }
                 }
             }.padding()
-        }
+        }.navigationTitle("🍏 Apple Frameworks")
     }
 }
 
 #Preview {
-    FrameworksGridView(
-        frameworks: MockData.frameworks,
-        onFrameworkSelected: { print($0.name) }
-    )
+    FrameworksGridView(frameworks: MockData.frameworks)
 }

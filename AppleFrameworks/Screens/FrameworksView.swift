@@ -11,6 +11,7 @@ import SwiftUI
 struct FrameworksView: View {
     @StateObject private var viewModel = FrameworksViewModel()
     @State private var displayMode: FrameworkDisplayMode = .list
+    @State private var path: [String] = []
 
     private let columns: [GridItem] = Array(
         repeating: GridItem(.flexible()),
@@ -18,11 +19,6 @@ struct FrameworksView: View {
     )
 
     var body: some View {
-        let detailBinding = Binding(
-            get: { viewModel.isShowingDetailView },
-            set: { if !$0 { viewModel.closeDetailView() } }
-        )
-
         NavigationStack {
             VStack {
                 HStack {
@@ -38,25 +34,13 @@ struct FrameworksView: View {
 
                 Group {
                     if displayMode == .list {
-                        FrameworkListView(
-                            frameworks: MockData.frameworks, onFrameworkSelected: { viewModel.selectedFramework = $0
-                            }
-                        )
+                        FrameworkListView(frameworks: MockData.frameworks)
                     } else {
-                        FrameworksGridView(
-                            frameworks: MockData.frameworks,
-                            onFrameworkSelected: { viewModel.selectedFramework = $0 }
-                        )
+                        FrameworksGridView(frameworks: MockData.frameworks)
                     }
+                }.navigationDestination(for: Framework.self) { framework in
+                    FrameworkDetailView(framework: framework)
                 }
-            }
-        }
-        .sheet(isPresented: detailBinding) {
-            if let selectedFramework = viewModel.selectedFramework {
-                FrameworkDetailView(
-                    framework: selectedFramework,
-                    isShowingDetailView: detailBinding
-                )
             }
         }
     }
